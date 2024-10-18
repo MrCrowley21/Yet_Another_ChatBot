@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 import asyncio
 import uuid
@@ -11,7 +13,11 @@ nest_asyncio.apply()
 
 # Initialize environmental variables
 configs = dotenv_values()
-model_name = configs["MODEL_NAME"]
+
+### Docker ###
+# model_name = configs["MODEL_NAME"]
+### Deployment ###
+model_name = os.getenv("MODEL_NAME")
 
 
 class StreamHandler:
