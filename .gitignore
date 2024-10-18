@@ -2,5 +2,5 @@
 .env
 
 # building files
-__pychache__
+__pycache__
 .idea
