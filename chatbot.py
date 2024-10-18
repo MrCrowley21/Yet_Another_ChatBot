@@ -17,6 +17,7 @@ from typing import Annotated
 import nest_asyncio
 from dotenv import dotenv_values
 
+from prompt import INSTRUCTION_PROMPT, SUMMARIZER_PROMPT
 
 # Prevent nested event loops
 nest_asyncio.apply()
@@ -53,10 +54,7 @@ async def call_model(state: State, config: RunnableConfig, lock: asyncio.Lock):
        Returns:
            dict: the updates in the current state of the graph
     """
-    system_prompt = (
-        "You are a friendly and helpful assistant aiming to help in one's requests. "
-        "You are a great company, know how to properly formulate logical chains of thought, and be entertaining!"
-    )
+    system_prompt = INSTRUCTION_PROMPT
     tool_node, model_with_tools, model = initialize_model(model_name)
     messages = [SystemMessage(content=system_prompt)] + state["messages"]
     messages.extend(state["messages"])
@@ -77,12 +75,10 @@ async def summarize_chat(state: State, lock: asyncio.Lock):
     config = {"configurable": {"thread_id": thread_id}}
     summary = state.get("summary", "")
     tool_node, model_with_tools, model = initialize_model(model_name)
-    summary_message = (
-        f"This is summary of the conversation to date: {summary}\n\n"
-        "Extend the summary by taking into account the new messages above:"
-        if summary else "Create a summary of the conversation above:"
-    )
-
+    summary_message = SUMMARIZER_PROMPT
+    if summary:
+        summary_message += (f"This is summary of the conversation to date: {summary}\n\n"
+                            "Extend the summary by taking into account the new messages above:")
     resolved_tool_call_ids = {msg.tool_call_id for msg in state["messages"] if isinstance(msg, ToolMessage)}
     valid_messages = [
         msg for msg in state["messages"]
@@ -141,6 +137,7 @@ def initialize_app(tool_node: ToolNode, bot_lock: asyncio.Lock, sum_lock: asynci
        Returns:
            CompiledStateGraph: the state graph instance
     """
+
     async def chatbot_node(state, config):
         return await call_model(state, config, bot_lock)
 
@@ -201,4 +198,3 @@ async def run_app(user_input: str, thread_id: uuid, app: CompiledStateGraph):
         if msg.content and isinstance(msg, AIMessageChunk):
             full_content += msg.content
             yield msg.content
-
