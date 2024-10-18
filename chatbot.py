@@ -23,15 +23,27 @@ from prompt import INSTRUCTION_PROMPT, SUMMARIZER_PROMPT
 nest_asyncio.apply()
 
 # Initialize environmental variables
-configs = dotenv_values()
-openai_key = configs["OPENAI_API_KEY"]
-google_cse_id = configs["GOOGLE_CSE_ID"]
-google_api_key = configs["GOOGLE_API_KEY"]
-model_name = configs["MODEL_NAME"]
-model_temperature = configs["TEMPERATURE"]
-langchain_tracing = configs["LANGCHAIN_TRACING_V2"]
-langchain_api_key = configs["LANGCHAIN_API_KEY"]
-langchain_project_name = configs["LANGCHAIN_PROJECT"]
+
+### For Docker ###
+# configs = dotenv_values()
+# openai_key = configs["OPENAI_API_KEY"]
+# google_cse_id = configs["GOOGLE_CSE_ID"]
+# google_api_key = configs["GOOGLE_API_KEY"]
+# model_name = configs["MODEL_NAME"]
+# model_temperature = configs["TEMPERATURE"]
+# langchain_tracing = configs["LANGCHAIN_TRACING_V2"]
+# langchain_api_key = configs["LANGCHAIN_API_KEY"]
+# langchain_project_name = configs["LANGCHAIN_PROJECT"]
+
+### For Deployment ###
+openai_key = os.getenv("OPENAI_API_KEY")
+google_cse_id = os.getenv("GOOGLE_CSE_ID")
+google_api_key = os.getenv("GOOGLE_API_KEY")
+model_name = os.getenv("MODEL_NAME")
+model_temperature = os.getenv("TEMPERATURE")
+langchain_tracing = os.getenv("LANGCHAIN_TRACING_V2")
+langchain_api_key = os.getenv("LANGCHAIN_API_KEY")
+langchain_project_name = os.getenv("LANGCHAIN_PROJECT")
 
 # Connect to the LangSmith
 os.environ["LANGCHAIN_TRACING_V2"] = langchain_tracing
