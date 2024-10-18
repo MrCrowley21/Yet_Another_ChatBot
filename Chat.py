@@ -103,9 +103,6 @@ if "bot_lock" not in st.session_state:
 if "sum_lock" not in st.session_state:
     st.session_state.sum_lock = asyncio.Lock()
 
-# if "executor" not in st.session_state:
-#     st.session_state.executor = concurrent.futures.ThreadPoolExecutor()
-
 if "app" not in st.session_state:
     bot_lock, sum_lock = create_locks()
     tool_node, model_with_tools, model = initialize_model(model_name)
