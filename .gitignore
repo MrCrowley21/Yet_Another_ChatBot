@@ -1,0 +1,6 @@
+# env files
+.env
+
+# building files
+__pychache__
+.idea
