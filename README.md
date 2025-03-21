@@ -56,7 +56,3 @@ then run the following commands:
 docker build -t chatbot_image . //build Docker image
 docker run -p 8501:8501 --name yet_another_chatbot chatbot_image  //run the container on the built image
 ```
-
-## Demo 🏃🏻
-Feel free to test the demo [here](https://yet-another-chatbot-416d3096d118.herokuapp.com/).
-Have fun! 😜
