@@ -11,7 +11,6 @@ production, helping to track conversation flows and detect potential issues.
 
 1. [Why LangChain? 🤔](#why-langchain-)
 2. [How to run it? 🛠](#how-to-run-it-)
-3. [Demo 🏃🏻](#demo-)
 
 ## Why LangChain? 🤔 
 <p align="justify">
